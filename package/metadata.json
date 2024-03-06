@@ -18,7 +18,7 @@
         "Version": "0.0.1",
         "Website": "https://github.com/prayag2/kde_minimalistclock"
     },
-    "X-Plasma-API": "declarativeappletscript",
-    "X-Plasma-MainScript": "ui/main.qml",
+    "X-Plasma-API-Minimum-Version": "6.0",
     "X-Plasma-Provides": "org.kde.plasma.time,org.kde.plasma.date"
+
 }

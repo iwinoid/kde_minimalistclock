@@ -1,8 +1,8 @@
-import QtQuick 2.0
-import QtQml 2.0
-import QtQuick.Controls 2.0
-import QtQuick.Dialogs 1.1
-import QtQuick.Layouts 1.15
+import QtQuick
+import QtQml
+import QtQuick.Controls
+import QtQuick.Dialogs
+import QtQuick.Layouts
 
 ColumnLayout {
 
