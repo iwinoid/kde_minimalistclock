@@ -1,4 +1,5 @@
 {
+    "KPackageStructure": "Plasma/Applet",
     "KPlugin": {
         "Authors": [
             {
@@ -12,9 +13,6 @@
         "Id": "com.github.prayag2.minimalistclock",
         "License": "GPLv3",
         "Name": "Minimalist Clock",
-        "ServiceTypes": [
-            "Plasma/Applet"
-        ],
         "Version": "0.0.1",
         "Website": "https://github.com/prayag2/kde_minimalistclock"
     },
