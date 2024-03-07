@@ -14,6 +14,9 @@
   <img src="https://github.com/Prayag2/kde_minimalistclock/blob/main/assets/ss.png"/>
 </p>
 
+## Note
+The applet has been ported to KDE Plasma 6, thanks to @dhruv8sh!
+
 ## Installation
 #### KDE Store (Preferred way)
 1. Right click on the desktop
@@ -27,4 +30,4 @@
 1. Clone this repository  
 `git clone https://github.com/prayag2/kde_minimalistclock && cd kde_minimalistclock/`  
 2. Install using the script  
-`kpackagetool5 -i package`
+`kpackagetool6 -i package`
