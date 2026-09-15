@@ -1,0 +1,133 @@
+# Translation of minimalistclock in Chinese (Simplified)
+# Copyright (C) 2026 Prayag Jain
+# This file is distributed under the same license as the minimalistclock package.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: minimalistclock\n"
+"Report-Msgid-Bugs-To: https://github.com/iwinoid/kde_minimalistclock\n"
+"POT-Creation-Date: 2026-09-16 02:16+0800\n"
+"PO-Revision-Date: 2026-08-30 12:00+0000\n"
+"Last-Translator: iwinoid\n"
+"Language-Team: Chinese (Simplified)\n"
+"Language: zh_CN\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: ../metadata.json
+msgid "Minimalist Clock Extended"
+msgstr "极简时钟 Extended"
+
+#: ../metadata.json
+msgid "A minimalistic clock widget for your Desktop!"
+msgstr "适用于桌面的极简时钟小部件！"
+
+#: ../contents/config/config.qml
+msgid "Appearance"
+msgstr "外观"
+
+#: ../contents/ui/configAppearance.qml
+msgid "Choose Color"
+msgstr "选择颜色"
+
+#: ../contents/ui/configAppearance.qml
+msgid "Time Settings"
+msgstr "时间设置"
+
+#: ../contents/ui/configAppearance.qml
+msgid "Font"
+msgstr "字体"
+
+#: ../contents/ui/configAppearance.qml
+msgid "Font Size"
+msgstr "字体大小"
+
+#: ../contents/ui/configAppearance.qml
+msgid "Letter Spacing"
+msgstr "字母间距"
+
+#: ../contents/ui/configAppearance.qml
+msgid "Word Spacing"
+msgstr "词间距"
+
+#: ../contents/ui/configAppearance.qml
+msgid "Date Settings"
+msgstr "日期设置"
+
+#: ../contents/ui/configAppearance.qml
+msgid "Day and Date Spacing"
+msgstr "日期与星期间距"
+
+#: ../contents/ui/configAppearance.qml
+msgid "Date Format"
+msgstr "日期格式"
+
+#: ../contents/ui/configAppearance.qml
+msgid "Use Qt date format: MM month, dd day, dddd weekday"
+msgstr "使用 Qt 日期格式：MM 月、dd 日、dddd 星期"
+
+#: ../contents/ui/configAppearance.qml
+msgid "Box Settings"
+msgstr "边框设置"
+
+#: ../contents/ui/configAppearance.qml
+msgid "Box spacing"
+msgstr "边框内边距"
+
+#: ../contents/ui/configAppearance.qml
+msgid "Border Width"
+msgstr "边框宽度"
+
+#: ../contents/ui/configAppearance.qml
+msgid "Frame Shadow"
+msgstr "边框阴影"
+
+#: ../contents/ui/configAppearance.qml
+msgid "Enable shadow"
+msgstr "启用阴影"
+
+#: ../contents/ui/configAppearance.qml
+msgid "Shadow Blur"
+msgstr "阴影模糊"
+
+#: ../contents/ui/configAppearance.qml
+msgid "Shadow Opacity"
+msgstr "阴影浓度"
+
+#: ../contents/ui/configAppearance.qml
+msgid "Text Shadow"
+msgstr "文字阴影"
+
+#: ../contents/ui/configAppearance.qml
+msgid "Enable text shadow"
+msgstr "启用文字阴影"
+
+#: ../contents/ui/configAppearance.qml
+msgid "Text Shadow Blur"
+msgstr "文字阴影模糊"
+
+#: ../contents/ui/configAppearance.qml
+msgid "Text Shadow Opacity"
+msgstr "文字阴影浓度"
+
+#: ../contents/ui/configAppearance.qml
+msgid "Color Settings"
+msgstr "颜色设置"
+
+#: ../contents/ui/configAppearance.qml
+msgid "Follow system color"
+msgstr "跟随系统配色"
+
+#: ../contents/ui/configAppearance.qml
+msgid "Custom Color"
+msgstr "自定义颜色"
+
+#: ../contents/ui/configAppearance.qml
+msgid "Choose..."
+msgstr "选择…"
+
+#: ../contents/ui/main.qml
+msgid "Panels are too small for me!"
+msgstr "面板太小，无法显示"

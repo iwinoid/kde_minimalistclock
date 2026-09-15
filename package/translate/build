@@ -1,0 +1,83 @@
+#!/bin/sh
+# 汉化构建脚本 - 将 *.po 编译为 *.mo 并安装到 contents/locale
+# 基于 Zren 的 translate/build v7，适配 Plasma 6 的 metadata.json
+
+DIR=`cd "$( dirname "$0" )" && pwd`
+# 优先从 metadata.json 读取 Id，兼容旧版 metadata.desktop
+if [ -f "$DIR/../metadata.json" ]; then
+    if command -v python3 >/dev/null 2>&1; then
+        plasmoidName=`python3 -c "import json; print(json.load(open('$DIR/../metadata.json'))['KPlugin']['Id'])" 2>/dev/null`
+    elif command -v jq >/dev/null 2>&1; then
+        plasmoidName=`jq -r '.KPlugin.Id' "$DIR/../metadata.json" 2>/dev/null`
+    fi
+fi
+# 回退：尝试 metadata.desktop
+if [ -z "$plasmoidName" ] && [ -f "$DIR/../metadata.desktop" ]; then
+    plasmoidName=`kreadconfig5 --file="$DIR/../metadata.desktop" --group="Desktop Entry" --key="X-KDE-PluginInfo-Name" 2>/dev/null`
+fi
+# 硬编码回退
+if [ -z "$plasmoidName" ]; then
+    plasmoidName="com.github.iwinoid.minimalistclock"
+fi
+
+packageRoot="${DIR}/.."
+projectName="plasma_applet_${plasmoidName}"
+
+TC_Red='\033[31m'; TC_LightGray='\033[90m'; TC_LightGreen='\033[92m'; TC_Reset='\033[0m'; TC_Bold='\033[1m'
+if [ ! -t 1 ]; then TC_Red=''; TC_LightGray=''; TC_LightGreen=''; TC_Reset=''; TC_Bold=''; fi
+echoGray() { echo -e "${TC_LightGray}$1${TC_Reset}"; }
+echoRed() { echo -e "${TC_Red}$1${TC_Reset}"; }
+echoGreen() { echo -e "${TC_LightGreen}$1${TC_Reset}"; }
+
+if [ -z "$plasmoidName" ]; then
+    echoRed "[translate/build] 错误：无法读取 plasmoidName"
+    exit 1
+fi
+
+if [ -z "$(which msgfmt)" ]; then
+    echoRed "[translate/build] 错误：未找到 msgfmt，请安装 gettext"
+    echoRed "[translate/build] 执行 'sudo apt install gettext' 或 'sudo pacman -S gettext'"
+    exit 1
+fi
+
+echoGray "[translate/build] 编译翻译文件 (plasmoid: $plasmoidName)"
+
+relativePath() {
+    basePath=`realpath -- "$1"`
+    longerPath=`realpath -- "$2"`
+    echo "${longerPath#${basePath}*}"
+}
+
+catalogs=`find "$DIR" -maxdepth 1 -name '*.po' | sort`
+if [ -z "$catalogs" ]; then
+    echoRed "[translate/build] 未找到任何 .po 文件"
+    exit 1
+fi
+
+for cat in $catalogs; do
+    catLocale=`basename "${cat%.*}"`
+    moFilename="${catLocale}.mo"
+    installPath="${packageRoot}/contents/locale/${catLocale}/LC_MESSAGES/${projectName}.mo"
+    installPath=`realpath -m -- "$installPath"`
+    relativeInstallPath=`relativePath "${packageRoot}" "${installPath}"`
+    relativeInstallPath="${relativeInstallPath#/*}"
+    echoGray "[translate/build] 转换 '${cat##*/}' => '${relativeInstallPath}'"
+    msgfmt -o "${DIR}/${moFilename}" "${cat}" || { echoRed "[translate/build] msgfmt 失败: $cat"; exit 1; }
+    mkdir -p "$(dirname "$installPath")"
+    mv "${DIR}/${moFilename}" "${installPath}"
+    echoGray "[translate/build] 已生成 ${installPath}"
+done
+
+echoGreen "[translate/build] 全部完成"
+
+if [ "$1" = "--restartplasma" ]; then
+    echo "[translate/build] 重启 plasmashell"
+    if command -v kquitapp6 >/dev/null 2>&1; then
+        kquitapp6 plasmashell 2>/dev/null; kstart plasmashell 2>/dev/null &
+    else
+        killall plasmashell 2>/dev/null; kstart5 plasmashell 2>/dev/null &
+    fi
+    echo "[translate/build] 重启完成"
+else
+    echo "[translate/build] 请重新安装小部件并重启 plasmashell 以测试： kpackagetool6 -u package && kpackagetool6 -i package"
+fi
