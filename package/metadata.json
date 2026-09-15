@@ -10,11 +10,11 @@
         "Category": "Date and Time",
         "Description": "A minimalistic clock widget for your Desktop!",
         "Icon": "clock",
-        "Id": "com.github.prayag2.minimalistclock",
+        "Id": "com.github.iwinoid.minimalistclock",
         "License": "GPLv3",
-        "Name": "Minimalist Clock",
-        "Version": "0.0.1",
-        "Website": "https://github.com/prayag2/kde_minimalistclock"
+        "Name": "Minimalist Clock Extended",
+        "Version": "0.1.0",
+        "Website": "https://github.com/iwinoid/kde_minimalistclock"
     },
     "X-Plasma-API-Minimum-Version": "6.0",
     "X-Plasma-Provides": "org.kde.plasma.time,org.kde.plasma.date"

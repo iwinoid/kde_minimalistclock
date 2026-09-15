@@ -1,0 +1,134 @@
+# Translation of minimalistclock in LANGUAGE
+# Copyright (C) 2026
+# This file is distributed under the same license as the minimalistclock package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: minimalistclock\n"
+"Report-Msgid-Bugs-To: https://github.com/iwinoid/kde_minimalistclock\n"
+"POT-Creation-Date: 2026-09-16 02:16+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ../metadata.json
+msgid "Minimalist Clock Extended"
+msgstr ""
+
+#: ../metadata.json
+msgid "A minimalistic clock widget for your Desktop!"
+msgstr ""
+
+#: ../contents/config/config.qml
+msgid "Appearance"
+msgstr ""
+
+#: ../contents/ui/configAppearance.qml
+msgid "Choose Color"
+msgstr ""
+
+#: ../contents/ui/configAppearance.qml
+msgid "Time Settings"
+msgstr ""
+
+#: ../contents/ui/configAppearance.qml
+msgid "Font"
+msgstr ""
+
+#: ../contents/ui/configAppearance.qml
+msgid "Font Size"
+msgstr ""
+
+#: ../contents/ui/configAppearance.qml
+msgid "Letter Spacing"
+msgstr ""
+
+#: ../contents/ui/configAppearance.qml
+msgid "Word Spacing"
+msgstr ""
+
+#: ../contents/ui/configAppearance.qml
+msgid "Date Settings"
+msgstr ""
+
+#: ../contents/ui/configAppearance.qml
+msgid "Day and Date Spacing"
+msgstr ""
+
+#: ../contents/ui/configAppearance.qml
+msgid "Date Format"
+msgstr ""
+
+#: ../contents/ui/configAppearance.qml
+msgid "Use Qt date format: MM month, dd day, dddd weekday"
+msgstr ""
+
+#: ../contents/ui/configAppearance.qml
+msgid "Box Settings"
+msgstr ""
+
+#: ../contents/ui/configAppearance.qml
+msgid "Box spacing"
+msgstr ""
+
+#: ../contents/ui/configAppearance.qml
+msgid "Border Width"
+msgstr ""
+
+#: ../contents/ui/configAppearance.qml
+msgid "Frame Shadow"
+msgstr ""
+
+#: ../contents/ui/configAppearance.qml
+msgid "Enable shadow"
+msgstr ""
+
+#: ../contents/ui/configAppearance.qml
+msgid "Shadow Blur"
+msgstr ""
+
+#: ../contents/ui/configAppearance.qml
+msgid "Shadow Opacity"
+msgstr ""
+
+#: ../contents/ui/configAppearance.qml
+msgid "Text Shadow"
+msgstr ""
+
+#: ../contents/ui/configAppearance.qml
+msgid "Enable text shadow"
+msgstr ""
+
+#: ../contents/ui/configAppearance.qml
+msgid "Text Shadow Blur"
+msgstr ""
+
+#: ../contents/ui/configAppearance.qml
+msgid "Text Shadow Opacity"
+msgstr ""
+
+#: ../contents/ui/configAppearance.qml
+msgid "Color Settings"
+msgstr ""
+
+#: ../contents/ui/configAppearance.qml
+msgid "Follow system color"
+msgstr ""
+
+#: ../contents/ui/configAppearance.qml
+msgid "Custom Color"
+msgstr ""
+
+#: ../contents/ui/configAppearance.qml
+msgid "Choose..."
+msgstr ""
+
+#: ../contents/ui/main.qml
+msgid "Panels are too small for me!"
+msgstr ""

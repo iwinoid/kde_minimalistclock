@@ -1,0 +1,185 @@
+#!/bin/sh
+# 汉化提取脚本 - 从 QML/JS/metadata.json 提取 i18n 字符串到 template.pot
+# 基于 Zren 的 translate/merge v23，适配 Plasma 6
+
+DIR=`cd "$( dirname "$0" )" && pwd`
+if [ -f "$DIR/../metadata.json" ]; then
+    if command -v python3 >/dev/null 2>&1; then
+        plasmoidName=`python3 -c "import json; print(json.load(open('$DIR/../metadata.json'))['KPlugin']['Id'])" 2>/dev/null`
+        website=`python3 -c "import json; print(json.load(open('$DIR/../metadata.json'))['KPlugin'].get('Website',''))" 2>/dev/null`
+    elif command -v jq >/dev/null 2>&1; then
+        plasmoidName=`jq -r '.KPlugin.Id' "$DIR/../metadata.json" 2>/dev/null`
+        website=`jq -r '.KPlugin.Website' "$DIR/../metadata.json" 2>/dev/null`
+    fi
+fi
+if [ -z "$plasmoidName" ] && [ -f "$DIR/../metadata.desktop" ]; then
+    plasmoidName=`kreadconfig5 --file="$DIR/../metadata.desktop" --group="Desktop Entry" --key="X-KDE-PluginInfo-Name" 2>/dev/null`
+    website=`kreadconfig5 --file="$DIR/../metadata.desktop" --group="Desktop Entry" --key="X-KDE-PluginInfo-Website" 2>/dev/null`
+fi
+if [ -z "$plasmoidName" ]; then
+    plasmoidName="com.github.iwinoid.minimalistclock"
+fi
+bugAddress="$website"
+widgetName="${plasmoidName##*.}"
+packageRoot=".."
+projectName="plasma_applet_${plasmoidName}"
+
+TC_Red='\033[31m'; TC_LightGray='\033[90m'; TC_LightGreen='\033[92m'; TC_Reset='\033[0m'; TC_Bold='\033[1m'
+if [ ! -t 1 ]; then TC_Red=''; TC_LightGray=''; TC_LightGreen=''; TC_Reset=''; TC_Bold=''; fi
+echoGray() { echo -e "${TC_LightGray}$1${TC_Reset}"; }
+echoRed() { echo -e "${TC_Red}$1${TC_Reset}"; }
+echoGreen() { echo -e "${TC_LightGreen}$1${TC_Reset}"; }
+
+if [ -z "$plasmoidName" ]; then
+    echoRed "[translate/merge] 错误：无法读取 plasmoidName"
+    exit 1
+fi
+if [ -z "$(which xgettext)" ]; then
+    echoRed "[translate/merge] 错误：未找到 xgettext，请安装 gettext"
+    exit 1
+fi
+
+echoGray "[translate/merge] 提取翻译字符串"
+
+potArgs="--from-code=UTF-8 --width=200 --add-location=file"
+
+# 1) 提取 metadata.json / metadata.desktop 中的 Name/Description
+rm -f "${DIR}/infiles.list"
+if [ -f "${packageRoot}/metadata.json" ]; then
+    # metadata.json 用 JSON 语言提取 KPlugin 字段（手动标记为 desktop 关键字）
+    # 为简化，生成临时 desktop 文件供 xgettext 解析
+    tmpDesktop="${DIR}/.tmp_metadata.desktop"
+    tmpDesktopName=".tmp_metadata.desktop"
+    # 生成临时 desktop 文件供 xgettext 解析 metadata.json
+    python3 <<PY > "$tmpDesktop" 2>/dev/null
+import json
+try:
+    d=json.load(open("$DIR/../metadata.json", encoding="utf-8"))
+    print("[Desktop Entry]")
+    print("Name=" + d["KPlugin"]["Name"])
+    print("Comment=" + d["KPlugin"]["Description"])
+    print("X-KDE-PluginInfo-Website=" + d["KPlugin"].get("Website",""))
+except Exception as e:
+    pass
+PY
+    if [ ! -s "$tmpDesktop" ]; then
+        if command -v jq >/dev/null 2>&1; then
+            jq -r '"[Desktop Entry]\nName=\(.KPlugin.Name)\nComment=\(.KPlugin.Description)\nX-KDE-PluginInfo-Website=\(.KPlugin.Website)"' "$DIR/../metadata.json" > "$tmpDesktop" 2>/dev/null
+        fi
+    fi
+    if [ ! -s "$tmpDesktop" ]; then
+        echo "[Desktop Entry]" > "$tmpDesktop"
+        python3 -c "import json; d=json.load(open('$DIR/../metadata.json', encoding='utf-8')); print('Name='+d['KPlugin']['Name']+'\nComment='+d['KPlugin']['Description'])" >> "$tmpDesktop" 2>/dev/null
+    fi
+    echo "$tmpDesktopName" > "${DIR}/infiles.list"
+    xgettext \
+        ${potArgs} \
+        --files-from="${DIR}/infiles.list" \
+        --language=Desktop \
+        -k -kName -kGenericName -kComment -kKeywords -kDescription \
+        -D "${packageRoot}" \
+        -D "${DIR}" \
+        -o "${DIR}/template.pot.new" \
+        || { echoRed "[translate/merge] xgettext (desktop) 失败"; exit 1; }
+    # 美化位置信息：让翻译人员看到 metadata.json 而非临时文件
+    sed -i 's#\.tmp_metadata\.desktop#../metadata.json#g' "${DIR}/template.pot.new"
+    rm -f "$tmpDesktop"
+else
+    find "${packageRoot}" -name '*.desktop' | sort > "${DIR}/infiles.list"
+    xgettext \
+        ${potArgs} \
+        --files-from="${DIR}/infiles.list" \
+        --language=Desktop \
+        -k -kName -kGenericName -kComment -kKeywords \
+        -D "${packageRoot}" \
+        -D "${DIR}" \
+        -o "${DIR}/template.pot.new" \
+        || { echoRed "[translate/merge] xgettext (desktop) 失败"; exit 1; }
+fi
+
+sed -i 's/"Content-Type: text\/plain; charset=CHARSET\\n"/"Content-Type: text\/plain; charset=UTF-8\\n"/' "${DIR}/template.pot.new"
+
+# 2) 提取 QML/JS/C++ 中的 i18n
+find "${packageRoot}" -name '*.cpp' -o -name '*.h' -o -name '*.c' -o -name '*.qml' -o -name '*.js' | sort > "${DIR}/infiles.list"
+xgettext \
+    ${potArgs} \
+    --files-from="${DIR}/infiles.list" \
+    -C -kde \
+    -ci18n \
+    -ki18n:1 -ki18nc:1c,2 -ki18np:1,2 -ki18ncp:1c,2,3 \
+    -kki18n:1 -kki18nc:1c,2 -kki18np:1,2 -kki18ncp:1c,2,3 \
+    -kxi18n:1 -kxi18nc:1c,2 -kxi18np:1,2 -kxi18ncp:1c,2,3 \
+    -kkxi18n:1 -kkxi18nc:1c,2 -kkxi18np:1,2 -kkxi18ncp:1c,2,3 \
+    -kI18N_NOOP:1 -kI18NC_NOOP:1c,2 \
+    -kI18N_NOOP2:1c,2 -kI18N_NOOP2_NOSTRIP:1c,2 \
+    -ktr2i18n:1 -ktr2xi18n:1 \
+    -kN_:1 \
+    -kaliasLocale \
+    --package-name="${widgetName}" \
+    --msgid-bugs-address="${bugAddress}" \
+    -D "${packageRoot}" \
+    -D "${DIR}" \
+    --join-existing \
+    -o "${DIR}/template.pot.new" \
+    || { echoRed "[translate/merge] xgettext (qml) 失败"; exit 1; }
+
+sed -i 's/# SOME DESCRIPTIVE TITLE./'"# Translation of ${widgetName} in LANGUAGE"'/' "${DIR}/template.pot.new"
+sed -i 's/# Copyright (C) YEAR THE PACKAGE'"'"'S COPYRIGHT HOLDER/'"# Copyright (C) $(date +%Y)"'/' "${DIR}/template.pot.new"
+sed -i 's/"Content-Type: text\/plain; charset=CHARSET\\n"/"Content-Type: text\/plain; charset=UTF-8\\n"/' "${DIR}/template.pot.new"
+
+# 合并到旧 pot
+if [ -f "${DIR}/template.pot" ]; then
+    newPotDate=`grep "POT-Creation-Date:" "${DIR}/template.pot.new" | sed 's/.\{3\}$//'`
+    oldPotDate=`grep "POT-Creation-Date:" "${DIR}/template.pot" | sed 's/.\{3\}$//'`
+    sed -i 's/'"${newPotDate}"'/'"${oldPotDate}"'/' "${DIR}/template.pot.new"
+    changes=`diff "${DIR}/template.pot" "${DIR}/template.pot.new"`
+    if [ ! -z "$changes" ]; then
+        sed -i 's/'"${oldPotDate}"'/'"${newPotDate}"'/' "${DIR}/template.pot.new"
+        mv "${DIR}/template.pot.new" "${DIR}/template.pot"
+        addedKeys=`echo "$changes" | grep "> msgid" | cut -c 9- | sort`
+        removedKeys=`echo "$changes" | grep "< msgid" | cut -c 9- | sort`
+        echo ""
+        echoGreen "新增字符串:"
+        echo "$addedKeys"
+        echo ""
+        echoRed "移除字符串:"
+        echo "$removedKeys"
+        echo ""
+    else
+        rm "${DIR}/template.pot.new"
+        echoGray "[translate/merge] 无变化"
+    fi
+else
+    mv "${DIR}/template.pot.new" "${DIR}/template.pot"
+fi
+
+potMessageCount=`grep -c 'msgid "' "${DIR}/template.pot"`
+potMessageCount=`expr $potMessageCount - 1` # 除去头部空 msgid
+echo "|  Locale  |  Lines  | % Done|" > "${DIR}/Status.md"
+echo "|----------|---------|-------|" >> "${DIR}/Status.md"
+entryFormat="| %-8s | %7s | %5s |"
+templateLine=`printf "$entryFormat" "Template" "${potMessageCount}" ""`
+echo "$templateLine" >> "${DIR}/Status.md"
+
+rm -f "${DIR}/infiles.list"
+echoGray "[translate/merge] 提取完成"
+
+echoGray "[translate/merge] 合并到现有 .po"
+catalogs=`find "$DIR" -maxdepth 1 -name '*.po' | sort`
+for cat in $catalogs; do
+    echoGray "[translate/merge] 更新 ${cat##*/}"
+    catLocale=`basename "${cat%.*}"`
+    widthArg="--width=200"
+    msgmerge $widthArg --update --backup=off "$cat" "${DIR}/template.pot"
+    # 统计完成度
+    total=`grep -c 'msgid "' "$cat"`
+    total=`expr $total - 1`
+    untranslated=`grep -Pzo 'msgstr ""\n(\n|$)' "$cat" | grep -c 'msgstr ""'`
+    translated=`expr $total - $untranslated`
+    percent=`expr $translated \* 100 / $total 2>/dev/null || echo 0`
+    line=`printf "$entryFormat" "$catLocale" "${translated}/${total}" "${percent}%"`
+    echo "$line" >> "${DIR}/Status.md"
+done
+
+cat "${DIR}/Status.md"
+echoGreen "[translate/merge] 全部完成"
