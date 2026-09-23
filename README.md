@@ -1,10 +1,10 @@
+> English | [简体中文](README_zh_CN.md)
+
 <p align="center">
   <img src="assets/logo.jpg" width=100/>
   <h2 align="center">Minimalist Clock Extended for KDE</h2>
   <p align="center">A minimalist looking clock widget!</center>
 </p>
-
-> English | [简体中文](README_zh_CN.md)
 
 <p align="center">
 <a href="https://github.com/iwinoid/kde_minimalistclock/stargazers"><img alt="GitHub stars" src="https://img.shields.io/github/stars/iwinoid/kde_minimalistclock?color=%23234a37&style=for-the-badge"></a>
