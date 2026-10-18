@@ -6,4 +6,5 @@ ConfigModel {
         icon: "preferences-desktop-color"
         source: "configAppearance.qml"
     }
+
 }
