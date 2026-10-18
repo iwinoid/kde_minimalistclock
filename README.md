@@ -36,6 +36,10 @@ All options live on the Appearance page (right-click the widget → Configure):
 - **Simplified Chinese localization** — full `zh_CN` translation, applied automatically under a Chinese locale
 - **Fixes** — font selection is persisted correctly; time digits are vertically centered in the frame
 
+## Roadmap
+
+- [ ] **Modular date/weekday line ("building blocks")** — split the single date line under the time into independent blocks (weekday, day, month, year, or custom segments). Each block should be toggleable and styleable on its own, and the blocks should be rearrangeable (order, horizontal/vertical layout, spacing), with optional preset layouts. The exact behaviour is still to be discussed.
+
 ## Installation
 
 #### From this repository (use this one)
