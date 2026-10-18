@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: minimalistclock\n"
 "Report-Msgid-Bugs-To: https://github.com/iwinoid/kde_minimalistclock\n"
-"POT-Creation-Date: 2026-09-16 02:16+0800\n"
+"POT-Creation-Date: 2026-10-19 01:22+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -58,15 +58,7 @@ msgid "Date Settings"
 msgstr ""
 
 #: ../contents/ui/configAppearance.qml
-msgid "Day and Date Spacing"
-msgstr ""
-
-#: ../contents/ui/configAppearance.qml
 msgid "Date Format"
-msgstr ""
-
-#: ../contents/ui/configAppearance.qml
-msgid "Use Qt date format: MM month, dd day, dddd weekday"
 msgstr ""
 
 #: ../contents/ui/configAppearance.qml
@@ -127,6 +119,78 @@ msgstr ""
 
 #: ../contents/ui/configAppearance.qml
 msgid "Choose..."
+msgstr ""
+
+#: ../contents/ui/DateBlockEditor.qml
+msgid "Year (four digits)"
+msgstr ""
+
+#: ../contents/ui/DateBlockEditor.qml
+msgid "Year (two digits)"
+msgstr ""
+
+#: ../contents/ui/DateBlockEditor.qml
+msgid "Month (full name)"
+msgstr ""
+
+#: ../contents/ui/DateBlockEditor.qml
+msgid "Month (short name)"
+msgstr ""
+
+#: ../contents/ui/DateBlockEditor.qml
+msgid "Month (two digits)"
+msgstr ""
+
+#: ../contents/ui/DateBlockEditor.qml
+msgid "Month (number)"
+msgstr ""
+
+#: ../contents/ui/DateBlockEditor.qml
+msgid "Weekday (full name)"
+msgstr ""
+
+#: ../contents/ui/DateBlockEditor.qml
+msgid "Weekday (short name)"
+msgstr ""
+
+#: ../contents/ui/DateBlockEditor.qml
+msgid "Day (two digits)"
+msgstr ""
+
+#: ../contents/ui/DateBlockEditor.qml
+msgid "Day (number)"
+msgstr ""
+
+#: ../contents/ui/DateBlockEditor.qml
+msgid "Custom text"
+msgstr ""
+
+#: ../contents/ui/DateBlockEditor.qml
+msgid "Preview:"
+msgstr ""
+
+#: ../contents/ui/DateBlockEditor.qml
+msgid "Separator or text"
+msgstr ""
+
+#: ../contents/ui/DateBlockEditor.qml
+msgid "Move up"
+msgstr ""
+
+#: ../contents/ui/DateBlockEditor.qml
+msgid "Move down"
+msgstr ""
+
+#: ../contents/ui/DateBlockEditor.qml
+msgid "Remove block"
+msgstr ""
+
+#: ../contents/ui/DateBlockEditor.qml
+msgid "Add block"
+msgstr ""
+
+#: ../contents/ui/DateBlockEditor.qml
+msgid "Reset to default"
 msgstr ""
 
 #: ../contents/ui/main.qml

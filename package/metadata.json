@@ -13,7 +13,7 @@
         "Id": "com.github.iwinoid.minimalistclock",
         "License": "GPLv3",
         "Name": "Minimalist Clock Extended",
-        "Version": "0.1.0",
+        "Version": "0.2.0",
         "Website": "https://github.com/iwinoid/kde_minimalistclock"
     },
     "X-Plasma-API-Minimum-Version": "6.0",

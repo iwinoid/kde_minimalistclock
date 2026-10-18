@@ -2,12 +2,13 @@ import QtQuick
 import QtQuick.Controls
 import QtQuick.Dialogs
 import QtQuick.Layouts
+import "dateBlocks.js" as DateBlocks
 import org.kde.kirigami as Kirigami
 
 Item {
     id: root
 
-    // ---- 配置绑定（19 个，与 main.xml 一一对应，名字一个不动） ----
+    // ---- 配置绑定（与 main.xml 一一对应） ----
     // 边框阴影开关 + 边框
     property alias cfg_enable_shadows: enableShadows.checked
     property alias cfg_frame_padding: framePadding.value
@@ -27,36 +28,31 @@ Item {
     // 日期
     property alias cfg_date_font_family: dateFontFamily.fontFamily
     property alias cfg_date_letter_spacing: dateLetterSpacing.value
-    property alias cfg_date_spacing: dateSpacing.value
     property alias cfg_date_font_size: dateFontSize.value
-    // 日期格式：不能 alias 到 ComboBox.editText。Plasma 在对话框初始化时写入
-    // 别名，此时 ComboBox 内部还没建完，建完后 editText 被重置回 model[0]，
-    // 存值丢失（重开对话框显示第一项而非存值）。改用中间属性双向手动同步。
+    // 旧版日期格式串：只读，仅用于把老配置迁移成积木，不再在设置页暴露
     property string cfg_date_format: "MM/dd dddd"
+    // 日期行积木（JSON 数组）；为空时按旧的 cfg_date_format 迁移，再回退默认
+    property string cfg_date_blocks: ""
     // 颜色
     property alias cfg_follow_system_color: followSystemColor.checked
     property alias cfg_font_color: fontColorProxy.chosenColor
 
-    function syncDateFormatField() {
-        // editText 会自动跟随选中项；写回是恒等写回，无害
-        if (!dateFormatField.model)
+    // 把配置里的积木同步给编辑器。只在配置值确实来自外部时覆盖编辑器，
+    // 避免用户正在输入时被自己的写回打断。
+    function syncDateBlocksEditor() {
+        if (!dateBlocksEditor)
             return ;
 
-        var i = dateFormatField.model.indexOf(cfg_date_format);
-        if (i !== -1) {
-            if (dateFormatField.currentIndex !== i)
-                dateFormatField.currentIndex = i;
+        var stored = DateBlocks.blocksForStored(cfg_date_blocks, cfg_date_format);
+        if (DateBlocks.serialize(stored) === DateBlocks.serialize(dateBlocksEditor.blocks))
+            return ;
 
-        } else if (dateFormatField.editText !== cfg_date_format) {
-            // 自定义值（不在预设里）：只写 editText，绝不碰 currentIndex。
-            // 给 editText 赋非预设值时 Qt 会自动把 currentIndex 置 -1；
-            // 反过来手动置 -1 会清空 editText，连带把 cfg_ 写空——数据丢失。
-            // 这里只赋值，相等保护挡住回环。
-            dateFormatField.editText = cfg_date_format;
-        }
+        dateBlocksEditor.blocks = stored;
     }
 
-    onCfg_date_formatChanged: syncDateFormatField()
+    Component.onCompleted: syncDateBlocksEditor()
+    onCfg_date_blocksChanged: syncDateBlocksEditor()
+    onCfg_date_formatChanged: syncDateBlocksEditor()
 
     Item {
         id: fontColorProxy
@@ -194,51 +190,14 @@ Item {
 
             }
 
-            RowLayout {
-                Kirigami.FormData.label: i18n("Day and Date Spacing") + ":"
+            DateBlockEditor {
+                id: dateBlocksEditor
 
-                SpinBox {
-                    id: dateSpacing
-
-                    from: 0
-                    to: 999
-                    Layout.preferredWidth: 140
-                }
-
-                Label {
-                    text: "px"
-                }
-
-            }
-
-            ColumnLayout {
                 Kirigami.FormData.label: i18n("Date Format") + ":"
-
-                ComboBox {
-                    id: dateFormatField
-
-                    Layout.fillWidth: true
-                    editable: true
-                    model: ["MM/dd dddd", "MM/dd ddd", "MM/dd", "dd/MM dddd", "dd MMM", "MMM dd", "MMM dd dddd", "dd MMM dddd", "MMM dd, dddd", "yyyy/MM/dd dddd", "dddd dd MMM"]
-                    Component.onCompleted: root.syncDateFormatField()
-                    // 用户侧任何改动（下拉选择/手输）都写回配置。恒等保护：
-                    // 程序化同步写入下拉的永远是 cfg_ 自己的值，写回也是恒等写回，
-                    // 不可能像旧 FontSelector 那样把存值改写掉。
-                    onEditTextChanged: {
-                        if (editText !== root.cfg_date_format)
-                            root.cfg_date_format = editText;
-
-                    }
+                Layout.fillWidth: true
+                onBlocksEdited: function(updatedBlocks) {
+                    root.cfg_date_blocks = DateBlocks.serialize(updatedBlocks);
                 }
-
-                Label {
-                    text: i18n("Use Qt date format: MM month, dd day, dddd weekday")
-                    font.pixelSize: 11
-                    opacity: 0.7
-                    wrapMode: Text.WordWrap
-                    Layout.fillWidth: true
-                }
-
             }
 
             // ---------- 边框 ----------
