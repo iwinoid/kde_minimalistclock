@@ -41,11 +41,11 @@ Item {
     // 避免用户正在输入时被自己的写回打断。
     function syncDateBlocksEditor() {
         if (!dateBlocksEditor)
-            return ;
+            return;
 
         var stored = DateBlocks.blocksForStored(cfg_date_blocks, cfg_date_format);
         if (DateBlocks.serialize(stored) === DateBlocks.serialize(dateBlocksEditor.blocks))
-            return ;
+            return;
 
         dateBlocksEditor.blocks = stored;
     }
@@ -111,7 +111,6 @@ Item {
                 Label {
                     text: "px"
                 }
-
             }
 
             RowLayout {
@@ -128,7 +127,6 @@ Item {
                 Label {
                     text: "px"
                 }
-
             }
 
             RowLayout {
@@ -145,7 +143,6 @@ Item {
                 Label {
                     text: "px"
                 }
-
             }
 
             // ---------- 日期 ----------
@@ -175,7 +172,6 @@ Item {
                 Label {
                     text: "px"
                 }
-
             }
 
             RowLayout {
@@ -192,7 +188,6 @@ Item {
                 Label {
                     text: "px"
                 }
-
             }
 
             DateBlockEditor {
@@ -200,7 +195,7 @@ Item {
 
                 Kirigami.FormData.label: i18n("Date Format") + ":"
                 Layout.fillWidth: true
-                onBlocksEdited: function(updatedBlocks) {
+                onBlocksEdited: function (updatedBlocks) {
                     root.cfg_date_blocks = DateBlocks.serialize(updatedBlocks);
                 }
             }
@@ -225,7 +220,6 @@ Item {
                 Label {
                     text: "px"
                 }
-
             }
 
             RowLayout {
@@ -242,7 +236,6 @@ Item {
                 Label {
                     text: "px"
                 }
-
             }
 
             // ---------- 边框阴影 ----------
@@ -273,7 +266,6 @@ Item {
                     text: "px"
                     enabled: enableShadows.checked
                 }
-
             }
 
             RowLayout {
@@ -292,7 +284,6 @@ Item {
                     text: "%"
                     enabled: enableShadows.checked
                 }
-
             }
 
             // ---------- 文字阴影 ----------
@@ -323,7 +314,6 @@ Item {
                     text: "px"
                     enabled: textShadowEnabled.checked
                 }
-
             }
 
             RowLayout {
@@ -342,7 +332,6 @@ Item {
                     text: "%"
                     enabled: textShadowEnabled.checked
                 }
-
             }
 
             // ---------- 颜色 ----------
@@ -375,11 +364,7 @@ Item {
                     text: i18n("Choose...")
                     onClicked: colorDialog.open()
                 }
-
             }
-
         }
-
     }
-
 }
