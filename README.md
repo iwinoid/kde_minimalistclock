@@ -78,6 +78,20 @@ Developed by DeepSeek V4.1 Flash.
 
 <a href="https://github.com/deepseek-ai/deepseek-harness"><img alt="powered by dsh" src="https://img.shields.io/badge/powered_by-dsh-4D6BFE?style=for-the-badge&logo=deepseek&logoColor=white"></a>
 
+## Development
+
+The widget targets Qt 6 / Plasma 6. On systems where `qml*` on `PATH` is Qt 5,
+the helper scripts use the Qt 6 tools explicitly:
+
+```sh
+./scripts/lint.sh     # strict qmllint + qmlformat check + translation check
+./scripts/format.sh   # qmlformat in place
+```
+
+`.qmllint.ini` and `.contextProperties.ini` keep the lint baseline at zero
+warnings: translation context functions are declared as known context
+properties, and KConfigXT dynamic keys are handled with a local lint directive.
+
 ## Upstream
 
 - Upstream: https://github.com/prayag2/kde_minimalistclock

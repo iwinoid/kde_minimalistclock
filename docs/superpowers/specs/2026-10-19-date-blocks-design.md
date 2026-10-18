@@ -123,3 +123,9 @@ Plasma 写配置别名的时机早于控件建完，会造成回显丢失（与�
   对象模型后可翻译（保存值仍是 `Default`）；`Choose...` 统一为 KDE 省略号
   `Choose…`；年积木中文统一为「年（四位数字）/年（两位数字）」；面板提示按英文
   原文语气改为「面板太小，放不下我！」
+- Qt 6 lint 基线：新增 `.qmllint.ini`（项目级 qmllint 配置）与
+  `.contextProperties.ini`（把 i18n/xi18n 家族声明为已知上下文属性，真正消除
+  UnqualifiedAccess 误报）；`main.qml` 加 `pragma ComponentBehavior: Bound`、
+  移除未用 import、把 `updateDateTime` 调用限定为 `fullRoot.`，KConfigXT 动态键
+  用文件级 `// qmllint disable missing-property` 处理。`scripts/lint.sh`
+  （qmllint + qmlformat + 翻译）现为 0 警告 0 信息。

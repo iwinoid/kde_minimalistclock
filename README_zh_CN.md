@@ -101,6 +101,19 @@ sh ./build   # 编译 .po -> .mo 到 contents/locale
 
 <a href="https://github.com/deepseek-ai/deepseek-harness"><img alt="powered by dsh" src="https://img.shields.io/badge/powered_by-dsh-4D6BFE?style=for-the-badge&logo=deepseek&logoColor=white"></a>
 
+## 开发
+
+项目按 Qt 6 / Plasma 6 开发。系统 `PATH` 上的 `qml*` 可能是 Qt 5，下面的脚本
+已固定使用 Qt 6 工具：
+
+```sh
+./scripts/lint.sh     # 严格 qmllint + qmlformat 检查 + 翻译校验
+./scripts/format.sh   # 就地格式化 QML
+```
+
+`.qmllint.ini` 与 `.contextProperties.ini` 把 lint 基线固定在 0 警告：
+翻译上下文函数声明为已知上下文属性，KConfigXT 动态键用文件级 lint 指令处理。
+
 ## 原仓库
 
 - 上游：https://github.com/prayag2/kde_minimalistclock
