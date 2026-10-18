@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: minimalistclock\n"
 "Report-Msgid-Bugs-To: https://github.com/iwinoid/kde_minimalistclock\n"
-"POT-Creation-Date: 2026-10-19 01:22+0800\n"
+"POT-Creation-Date: 2026-10-19 01:58+0800\n"
 "PO-Revision-Date: 2026-08-30 12:00+0000\n"
 "Last-Translator: iwinoid\n"
 "Language-Team: Chinese (Simplified)\n"
@@ -183,6 +183,10 @@ msgstr "下移"
 #: ../contents/ui/DateBlockEditor.qml
 msgid "Remove block"
 msgstr "移除积木"
+
+#: ../contents/ui/DateBlockEditor.qml
+msgid "Blocks are joined from left to right."
+msgstr "积木按从左到右的顺序拼接。"
 
 #: ../contents/ui/DateBlockEditor.qml
 msgid "Add block"

@@ -1,3 +1,5 @@
+pragma ComponentBehavior: Bound
+
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
@@ -150,11 +152,25 @@ ColumnLayout {
             opacity: 0.7
         }
 
-        Label {
+        Rectangle {
             Layout.fillWidth: true
-            text: root.previewText
-            elide: Text.ElideRight
-            font.bold: true
+            implicitHeight: previewLabel.implicitHeight + Kirigami.Units.largeSpacing * 2
+            radius: Kirigami.Units.smallSpacing
+            color: Kirigami.Theme.alternateBackgroundColor
+            border.width: 1
+            border.color: Qt.rgba(Kirigami.Theme.textColor.r, Kirigami.Theme.textColor.g, Kirigami.Theme.textColor.b, 0.15)
+
+            Label {
+                id: previewLabel
+
+                anchors.centerIn: parent
+                width: parent.width - Kirigami.Units.largeSpacing * 2
+                text: root.previewText
+                elide: Text.ElideRight
+                horizontalAlignment: Text.AlignHCenter
+                font.bold: true
+            }
+
         }
 
     }
@@ -174,7 +190,7 @@ ColumnLayout {
             spacing: Kirigami.Units.smallSpacing
 
             ComboBox {
-                Layout.preferredWidth: 200
+                Layout.preferredWidth: Kirigami.Units.gridUnit * 11
                 model: root.tokenChoices
                 textRole: "label"
                 currentIndex: blockRow.isCustom ? root.customChoiceIndex : root.choiceIndexFor(blockRow.modelData.token)
@@ -193,6 +209,12 @@ ColumnLayout {
                 text: blockRow.isCustom ? blockRow.modelData.text : ""
                 placeholderText: i18n("Separator or text")
                 onTextEdited: root.setBlockText(blockRow.index, text)
+            }
+
+            // token 块没有输入框，用等宽占位让各行的按钮列保持对齐
+            Item {
+                Layout.fillWidth: true
+                visible: !blockRow.isCustom
             }
 
             ToolButton {
@@ -227,8 +249,17 @@ ColumnLayout {
     }
 
     // ---- 添加 / 恢复默认 ----
+    Label {
+        Layout.fillWidth: true
+        Layout.topMargin: Kirigami.Units.smallSpacing
+        text: i18n("Blocks are joined from left to right.")
+        opacity: 0.7
+        wrapMode: Text.WordWrap
+    }
+
     RowLayout {
         Layout.fillWidth: true
+        Layout.topMargin: Kirigami.Units.smallSpacing
         spacing: Kirigami.Units.smallSpacing
 
         Button {

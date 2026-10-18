@@ -70,7 +70,7 @@ KDE 商店里的“Minimalist Clock”是上游原作者的版本，**不包含*
 
 ## 汉化说明
 
-- 已提供 `zh_CN` 完整翻译（45 条，100%），位于 `package/translate/zh_CN.po`
+- 已提供 `zh_CN` 完整翻译（46 条，100%），位于 `package/translate/zh_CN.po`
 - 编译后的翻译文件为 `package/contents/locale/zh_CN/LC_MESSAGES/plasma_applet_com.github.iwinoid.minimalistclock.mo`，随小部件打包分发，Plasma 5.37+ 会自动加载，无需手动安装
 - 界面字符串覆盖：
   - `外观`、`选择颜色`

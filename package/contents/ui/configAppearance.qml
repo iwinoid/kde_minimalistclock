@@ -72,6 +72,11 @@ Item {
         id: scroll
 
         anchors.fill: parent
+        // 内容与对话框边缘留白，避免贴边
+        anchors.leftMargin: Kirigami.Units.gridUnit
+        anchors.rightMargin: Kirigami.Units.gridUnit
+        anchors.topMargin: Kirigami.Units.smallSpacing * 2
+        anchors.bottomMargin: Kirigami.Units.smallSpacing * 2
         clip: true
         ScrollBar.horizontal.policy: ScrollBar.AlwaysOff
         ScrollBar.vertical.policy: ScrollBar.AsNeeded
@@ -358,12 +363,12 @@ Item {
                 spacing: 8
 
                 Rectangle {
-                    width: 40
-                    height: 22
-                    radius: 4
+                    implicitWidth: Kirigami.Units.gridUnit * 2
+                    implicitHeight: Math.round(Kirigami.Units.gridUnit * 1.2)
+                    radius: Kirigami.Units.smallSpacing
                     color: fontColorProxy.chosenColor
                     border.width: 1
-                    border.color: "#888"
+                    border.color: Kirigami.Theme.disabledTextColor
                 }
 
                 Button {

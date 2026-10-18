@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: minimalistclock\n"
 "Report-Msgid-Bugs-To: https://github.com/iwinoid/kde_minimalistclock\n"
-"POT-Creation-Date: 2026-10-19 01:22+0800\n"
+"POT-Creation-Date: 2026-10-19 01:58+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -183,6 +183,10 @@ msgstr ""
 
 #: ../contents/ui/DateBlockEditor.qml
 msgid "Remove block"
+msgstr ""
+
+#: ../contents/ui/DateBlockEditor.qml
+msgid "Blocks are joined from left to right."
 msgstr ""
 
 #: ../contents/ui/DateBlockEditor.qml
