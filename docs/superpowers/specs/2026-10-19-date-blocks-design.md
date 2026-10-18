@@ -114,3 +114,5 @@ Plasma 写配置别名的时机早于控件建完，会造成回显丢失（与�
 - 颜色预览块改用 `implicitWidth/implicitHeight`，消除 Qt6 qmllint 的
   `Quick.layout-positioning` 警告；`DateBlockEditor.qml` 加
   `pragma ComponentBehavior: Bound`
+- 表单外包一层 `ColumnLayout`，`Layout.maximumWidth: Kirigami.Units.gridUnit * 40`
+  并水平居中：对话框被拉宽/最大化时内容不再拉伸到全宽，默认窄宽度下仍填满
