@@ -92,3 +92,25 @@ Plasma 写配置别名的时机早于控件建完，会造成回显丢失（与�
 - 每块独立字体/字号：结构已可扩展，留到下一期（见 README Roadmap）
 - 拖拽排序：配置对话框里用按钮排序更稳
 - 时间行的积木化：本次只处理日期行
+
+## 9. 后续修复（0.2.x）
+
+### 设置页打开慢（~3 秒）
+
+根因不在积木逻辑：Plasma 桌面风格 `org.kde.desktop` 的 `ComboBox` 在
+`onCountChanged` 里会对每个模型项调用一次 `FontMetrics.boundingRect()` 计算宽度。
+字体选择器把 600+ 个字体直接塞进 `ComboBox.model`，两个选择器合计上千次文字测量，
+导致设置页卡顿 2–3 秒（隔离实验：去掉大模型后从 ~3.0s 降到 ~0.5s）。
+
+修复：`FontSelector.qml` 改用 `org.kde.plasma.components` 的 `ComboBox`
+（模板实现，不做逐项文字测量）。实测配置窗口出现时间从 ~3.0s 降到 ~0.57s。
+
+### 设置页留白与积木区布局
+
+- `ScrollView` 增加左右 `Kirigami.Units.gridUnit`、上下 `smallSpacing * 2` 边距，
+  内容不再贴对话框边缘
+- 积木区：预览改为带背景/描边的框；token 块用等宽占位让各行按钮列对齐；
+  补「积木按从左到右拼接」提示；ComboBox 宽度改用 `Kirigami.Units` 推导
+- 颜色预览块改用 `implicitWidth/implicitHeight`，消除 Qt6 qmllint 的
+  `Quick.layout-positioning` 警告；`DateBlockEditor.qml` 加
+  `pragma ComponentBehavior: Bound`
