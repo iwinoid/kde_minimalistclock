@@ -81,288 +81,295 @@ Item {
         ScrollBar.horizontal.policy: ScrollBar.AlwaysOff
         ScrollBar.vertical.policy: ScrollBar.AsNeeded
 
-        Kirigami.FormLayout {
+        ColumnLayout {
             width: scroll.availableWidth
+            spacing: 0
 
-            // ---------- 时间 ----------
-            Kirigami.Separator {
-                Kirigami.FormData.isSection: true
-                Kirigami.FormData.label: i18n("Time Settings")
-            }
-
-            FontSelector {
-                id: timeFontFamily
-
-                Kirigami.FormData.label: i18n("Font") + ":"
+            Kirigami.FormLayout {
                 Layout.fillWidth: true
-            }
+                Layout.maximumWidth: Kirigami.Units.gridUnit * 40
+                Layout.alignment: Qt.AlignHCenter
 
-            RowLayout {
-                Kirigami.FormData.label: i18n("Font Size") + ":"
-
-                SpinBox {
-                    id: timeFontSize
-
-                    from: 1
-                    to: 999
-                    Layout.preferredWidth: 140
+                // ---------- 时间 ----------
+                Kirigami.Separator {
+                    Kirigami.FormData.isSection: true
+                    Kirigami.FormData.label: i18n("Time Settings")
                 }
 
-                Label {
-                    text: "px"
-                }
-            }
+                FontSelector {
+                    id: timeFontFamily
 
-            RowLayout {
-                Kirigami.FormData.label: i18n("Letter Spacing") + ":"
-
-                SpinBox {
-                    id: timeLetterSpacing
-
-                    from: 0
-                    to: 999
-                    Layout.preferredWidth: 140
+                    Kirigami.FormData.label: i18n("Font") + ":"
+                    Layout.fillWidth: true
                 }
 
-                Label {
-                    text: "px"
-                }
-            }
+                RowLayout {
+                    Kirigami.FormData.label: i18n("Font Size") + ":"
 
-            RowLayout {
-                Kirigami.FormData.label: i18n("Word Spacing") + ":"
+                    SpinBox {
+                        id: timeFontSize
 
-                SpinBox {
-                    id: timeWordSpacing
+                        from: 1
+                        to: 999
+                        Layout.preferredWidth: 140
+                    }
 
-                    from: 0
-                    to: 999
-                    Layout.preferredWidth: 140
-                }
-
-                Label {
-                    text: "px"
-                }
-            }
-
-            // ---------- 日期 ----------
-            Kirigami.Separator {
-                Kirigami.FormData.isSection: true
-                Kirigami.FormData.label: i18n("Date Settings")
-            }
-
-            FontSelector {
-                id: dateFontFamily
-
-                Kirigami.FormData.label: i18n("Font") + ":"
-                Layout.fillWidth: true
-            }
-
-            RowLayout {
-                Kirigami.FormData.label: i18n("Font Size") + ":"
-
-                SpinBox {
-                    id: dateFontSize
-
-                    from: 1
-                    to: 999
-                    Layout.preferredWidth: 140
+                    Label {
+                        text: "px"
+                    }
                 }
 
-                Label {
-                    text: "px"
-                }
-            }
+                RowLayout {
+                    Kirigami.FormData.label: i18n("Letter Spacing") + ":"
 
-            RowLayout {
-                Kirigami.FormData.label: i18n("Letter Spacing") + ":"
+                    SpinBox {
+                        id: timeLetterSpacing
 
-                SpinBox {
-                    id: dateLetterSpacing
+                        from: 0
+                        to: 999
+                        Layout.preferredWidth: 140
+                    }
 
-                    from: 0
-                    to: 999
-                    Layout.preferredWidth: 140
-                }
-
-                Label {
-                    text: "px"
-                }
-            }
-
-            DateBlockEditor {
-                id: dateBlocksEditor
-
-                Kirigami.FormData.label: i18n("Date Format") + ":"
-                Layout.fillWidth: true
-                onBlocksEdited: function (updatedBlocks) {
-                    root.cfg_date_blocks = DateBlocks.serialize(updatedBlocks);
-                }
-            }
-
-            // ---------- 边框 ----------
-            Kirigami.Separator {
-                Kirigami.FormData.isSection: true
-                Kirigami.FormData.label: i18n("Box Settings")
-            }
-
-            RowLayout {
-                Kirigami.FormData.label: i18n("Box spacing") + ":"
-
-                SpinBox {
-                    id: framePadding
-
-                    from: 0
-                    to: 999
-                    Layout.preferredWidth: 140
+                    Label {
+                        text: "px"
+                    }
                 }
 
-                Label {
-                    text: "px"
-                }
-            }
+                RowLayout {
+                    Kirigami.FormData.label: i18n("Word Spacing") + ":"
 
-            RowLayout {
-                Kirigami.FormData.label: i18n("Border Width") + ":"
+                    SpinBox {
+                        id: timeWordSpacing
 
-                SpinBox {
-                    id: frameBorderWidth
+                        from: 0
+                        to: 999
+                        Layout.preferredWidth: 140
+                    }
 
-                    from: 0
-                    to: 999
-                    Layout.preferredWidth: 140
-                }
-
-                Label {
-                    text: "px"
-                }
-            }
-
-            // ---------- 边框阴影 ----------
-            Kirigami.Separator {
-                Kirigami.FormData.isSection: true
-                Kirigami.FormData.label: i18n("Frame Shadow")
-            }
-
-            CheckBox {
-                id: enableShadows
-
-                text: i18n("Enable shadow")
-            }
-
-            RowLayout {
-                Kirigami.FormData.label: i18n("Shadow Blur") + ":"
-
-                SpinBox {
-                    id: frameShadowRadius
-
-                    from: 0
-                    to: 50
-                    enabled: enableShadows.checked
-                    Layout.preferredWidth: 140
+                    Label {
+                        text: "px"
+                    }
                 }
 
-                Label {
-                    text: "px"
-                    enabled: enableShadows.checked
-                }
-            }
-
-            RowLayout {
-                Kirigami.FormData.label: i18n("Shadow Opacity") + ":"
-
-                SpinBox {
-                    id: frameShadowOpacity
-
-                    from: 0
-                    to: 100
-                    enabled: enableShadows.checked
-                    Layout.preferredWidth: 140
+                // ---------- 日期 ----------
+                Kirigami.Separator {
+                    Kirigami.FormData.isSection: true
+                    Kirigami.FormData.label: i18n("Date Settings")
                 }
 
-                Label {
-                    text: "%"
-                    enabled: enableShadows.checked
-                }
-            }
+                FontSelector {
+                    id: dateFontFamily
 
-            // ---------- 文字阴影 ----------
-            Kirigami.Separator {
-                Kirigami.FormData.isSection: true
-                Kirigami.FormData.label: i18n("Text Shadow")
-            }
-
-            CheckBox {
-                id: textShadowEnabled
-
-                text: i18n("Enable text shadow")
-            }
-
-            RowLayout {
-                Kirigami.FormData.label: i18n("Text Shadow Blur") + ":"
-
-                SpinBox {
-                    id: textShadowRadius
-
-                    from: 0
-                    to: 20
-                    enabled: textShadowEnabled.checked
-                    Layout.preferredWidth: 140
+                    Kirigami.FormData.label: i18n("Font") + ":"
+                    Layout.fillWidth: true
                 }
 
-                Label {
-                    text: "px"
-                    enabled: textShadowEnabled.checked
-                }
-            }
+                RowLayout {
+                    Kirigami.FormData.label: i18n("Font Size") + ":"
 
-            RowLayout {
-                Kirigami.FormData.label: i18n("Text Shadow Opacity") + ":"
+                    SpinBox {
+                        id: dateFontSize
 
-                SpinBox {
-                    id: textShadowOpacity
+                        from: 1
+                        to: 999
+                        Layout.preferredWidth: 140
+                    }
 
-                    from: 0
-                    to: 100
-                    enabled: textShadowEnabled.checked
-                    Layout.preferredWidth: 140
+                    Label {
+                        text: "px"
+                    }
                 }
 
-                Label {
-                    text: "%"
-                    enabled: textShadowEnabled.checked
-                }
-            }
+                RowLayout {
+                    Kirigami.FormData.label: i18n("Letter Spacing") + ":"
 
-            // ---------- 颜色 ----------
-            Kirigami.Separator {
-                Kirigami.FormData.isSection: true
-                Kirigami.FormData.label: i18n("Color Settings")
-            }
+                    SpinBox {
+                        id: dateLetterSpacing
 
-            CheckBox {
-                id: followSystemColor
+                        from: 0
+                        to: 999
+                        Layout.preferredWidth: 140
+                    }
 
-                text: i18n("Follow system color")
-            }
-
-            RowLayout {
-                Kirigami.FormData.label: i18n("Custom Color") + ":"
-                enabled: !followSystemColor.checked
-                spacing: 8
-
-                Rectangle {
-                    implicitWidth: Kirigami.Units.gridUnit * 2
-                    implicitHeight: Math.round(Kirigami.Units.gridUnit * 1.2)
-                    radius: Kirigami.Units.smallSpacing
-                    color: fontColorProxy.chosenColor
-                    border.width: 1
-                    border.color: Kirigami.Theme.disabledTextColor
+                    Label {
+                        text: "px"
+                    }
                 }
 
-                Button {
-                    text: i18n("Choose...")
-                    onClicked: colorDialog.open()
+                DateBlockEditor {
+                    id: dateBlocksEditor
+
+                    Kirigami.FormData.label: i18n("Date Format") + ":"
+                    Layout.fillWidth: true
+                    onBlocksEdited: function (updatedBlocks) {
+                        root.cfg_date_blocks = DateBlocks.serialize(updatedBlocks);
+                    }
+                }
+
+                // ---------- 边框 ----------
+                Kirigami.Separator {
+                    Kirigami.FormData.isSection: true
+                    Kirigami.FormData.label: i18n("Box Settings")
+                }
+
+                RowLayout {
+                    Kirigami.FormData.label: i18n("Box spacing") + ":"
+
+                    SpinBox {
+                        id: framePadding
+
+                        from: 0
+                        to: 999
+                        Layout.preferredWidth: 140
+                    }
+
+                    Label {
+                        text: "px"
+                    }
+                }
+
+                RowLayout {
+                    Kirigami.FormData.label: i18n("Border Width") + ":"
+
+                    SpinBox {
+                        id: frameBorderWidth
+
+                        from: 0
+                        to: 999
+                        Layout.preferredWidth: 140
+                    }
+
+                    Label {
+                        text: "px"
+                    }
+                }
+
+                // ---------- 边框阴影 ----------
+                Kirigami.Separator {
+                    Kirigami.FormData.isSection: true
+                    Kirigami.FormData.label: i18n("Frame Shadow")
+                }
+
+                CheckBox {
+                    id: enableShadows
+
+                    text: i18n("Enable shadow")
+                }
+
+                RowLayout {
+                    Kirigami.FormData.label: i18n("Shadow Blur") + ":"
+
+                    SpinBox {
+                        id: frameShadowRadius
+
+                        from: 0
+                        to: 50
+                        enabled: enableShadows.checked
+                        Layout.preferredWidth: 140
+                    }
+
+                    Label {
+                        text: "px"
+                        enabled: enableShadows.checked
+                    }
+                }
+
+                RowLayout {
+                    Kirigami.FormData.label: i18n("Shadow Opacity") + ":"
+
+                    SpinBox {
+                        id: frameShadowOpacity
+
+                        from: 0
+                        to: 100
+                        enabled: enableShadows.checked
+                        Layout.preferredWidth: 140
+                    }
+
+                    Label {
+                        text: "%"
+                        enabled: enableShadows.checked
+                    }
+                }
+
+                // ---------- 文字阴影 ----------
+                Kirigami.Separator {
+                    Kirigami.FormData.isSection: true
+                    Kirigami.FormData.label: i18n("Text Shadow")
+                }
+
+                CheckBox {
+                    id: textShadowEnabled
+
+                    text: i18n("Enable text shadow")
+                }
+
+                RowLayout {
+                    Kirigami.FormData.label: i18n("Text Shadow Blur") + ":"
+
+                    SpinBox {
+                        id: textShadowRadius
+
+                        from: 0
+                        to: 20
+                        enabled: textShadowEnabled.checked
+                        Layout.preferredWidth: 140
+                    }
+
+                    Label {
+                        text: "px"
+                        enabled: textShadowEnabled.checked
+                    }
+                }
+
+                RowLayout {
+                    Kirigami.FormData.label: i18n("Text Shadow Opacity") + ":"
+
+                    SpinBox {
+                        id: textShadowOpacity
+
+                        from: 0
+                        to: 100
+                        enabled: textShadowEnabled.checked
+                        Layout.preferredWidth: 140
+                    }
+
+                    Label {
+                        text: "%"
+                        enabled: textShadowEnabled.checked
+                    }
+                }
+
+                // ---------- 颜色 ----------
+                Kirigami.Separator {
+                    Kirigami.FormData.isSection: true
+                    Kirigami.FormData.label: i18n("Color Settings")
+                }
+
+                CheckBox {
+                    id: followSystemColor
+
+                    text: i18n("Follow system color")
+                }
+
+                RowLayout {
+                    Kirigami.FormData.label: i18n("Custom Color") + ":"
+                    enabled: !followSystemColor.checked
+                    spacing: 8
+
+                    Rectangle {
+                        implicitWidth: Kirigami.Units.gridUnit * 2
+                        implicitHeight: Math.round(Kirigami.Units.gridUnit * 1.2)
+                        radius: Kirigami.Units.smallSpacing
+                        color: fontColorProxy.chosenColor
+                        border.width: 1
+                        border.color: Kirigami.Theme.disabledTextColor
+                    }
+
+                    Button {
+                        text: i18n("Choose...")
+                        onClicked: colorDialog.open()
+                    }
                 }
             }
         }
