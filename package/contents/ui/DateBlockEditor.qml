@@ -17,40 +17,52 @@ ColumnLayout {
     readonly property int customChoiceIndex: tokenChoices.length - 1
     property string previewText: ""
     // 下拉框选项；最后一项是自定义文本
-    readonly property var tokenChoices: [{
-        "token": "yyyy",
-        "label": i18n("Year (four digits)")
-    }, {
-        "token": "yy",
-        "label": i18n("Year (two digits)")
-    }, {
-        "token": "MMMM",
-        "label": i18n("Month (full name)")
-    }, {
-        "token": "MMM",
-        "label": i18n("Month (short name)")
-    }, {
-        "token": "MM",
-        "label": i18n("Month (two digits)")
-    }, {
-        "token": "M",
-        "label": i18n("Month (number)")
-    }, {
-        "token": "dddd",
-        "label": i18n("Weekday (full name)")
-    }, {
-        "token": "ddd",
-        "label": i18n("Weekday (short name)")
-    }, {
-        "token": "dd",
-        "label": i18n("Day (two digits)")
-    }, {
-        "token": "d",
-        "label": i18n("Day (number)")
-    }, {
-        "token": "",
-        "label": i18n("Custom text")
-    }]
+    readonly property var tokenChoices: [
+        {
+            "token": "yyyy",
+            "label": i18n("Year (four digits)")
+        },
+        {
+            "token": "yy",
+            "label": i18n("Year (two digits)")
+        },
+        {
+            "token": "MMMM",
+            "label": i18n("Month (full name)")
+        },
+        {
+            "token": "MMM",
+            "label": i18n("Month (short name)")
+        },
+        {
+            "token": "MM",
+            "label": i18n("Month (two digits)")
+        },
+        {
+            "token": "M",
+            "label": i18n("Month (number)")
+        },
+        {
+            "token": "dddd",
+            "label": i18n("Weekday (full name)")
+        },
+        {
+            "token": "ddd",
+            "label": i18n("Weekday (short name)")
+        },
+        {
+            "token": "dd",
+            "label": i18n("Day (two digits)")
+        },
+        {
+            "token": "d",
+            "label": i18n("Day (number)")
+        },
+        {
+            "token": "",
+            "label": i18n("Custom text")
+        }
+    ]
 
     signal blocksEdited(var updatedBlocks)
 
@@ -68,7 +80,6 @@ ColumnLayout {
         for (var i = 0; i < tokenChoices.length; i++) {
             if (tokenChoices[i].token === token)
                 return i;
-
         }
         return customChoiceIndex;
     }
@@ -92,7 +103,7 @@ ColumnLayout {
     // 文本块就地修改：不替换数组，避免 Repeater 重建导致输入框失焦。
     function setBlockText(blockIndex, text) {
         if (!blocks[blockIndex] || blocks[blockIndex].text === text)
-            return ;
+            return;
 
         blocks[blockIndex].text = text;
         refreshPreview();
@@ -101,7 +112,7 @@ ColumnLayout {
 
     function addBlock(token) {
         if (blocks.length >= maxBlocks)
-            return ;
+            return;
 
         var updated = blocks.slice();
         updated.push(token === "" ? {
@@ -115,7 +126,7 @@ ColumnLayout {
     function moveBlock(blockIndex, offset) {
         var target = blockIndex + offset;
         if (target < 0 || target >= blocks.length)
-            return ;
+            return;
 
         var updated = blocks.slice();
         var moved = updated[blockIndex];
@@ -126,7 +137,7 @@ ColumnLayout {
 
     function removeBlock(blockIndex) {
         if (blocks.length <= 1)
-            return ;
+            return;
 
         var updated = blocks.slice();
         updated.splice(blockIndex, 1);
@@ -170,9 +181,7 @@ ColumnLayout {
                 horizontalAlignment: Text.AlignHCenter
                 font.bold: true
             }
-
         }
-
     }
 
     // ---- 积木列表 ----
@@ -243,9 +252,7 @@ ColumnLayout {
                 ToolTip.visible: hovered
                 Accessible.name: i18n("Remove block")
             }
-
         }
-
     }
 
     // ---- 添加 / 恢复默认 ----
@@ -278,7 +285,6 @@ ColumnLayout {
         Item {
             Layout.fillWidth: true
         }
-
     }
 
     Menu {
@@ -293,9 +299,6 @@ ColumnLayout {
                 text: modelData.label
                 onTriggered: root.addBlock(modelData.token)
             }
-
         }
-
     }
-
 }

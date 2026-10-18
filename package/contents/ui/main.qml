@@ -60,7 +60,6 @@ PlasmoidItem {
 
             text: i18n("Panels are too small for me!")
         }
-
     }
 
     fullRepresentation: Item {
@@ -172,9 +171,7 @@ PlasmoidItem {
                         shadowHorizontalOffset: 0
                         shadowVerticalOffset: 1
                     }
-
                 }
-
             }
 
             PlasmaComponents.Label {
@@ -195,11 +192,7 @@ PlasmoidItem {
                     shadowHorizontalOffset: 0
                     shadowVerticalOffset: 1
                 }
-
             }
-
         }
-
     }
-
 }

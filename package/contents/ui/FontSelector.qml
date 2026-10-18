@@ -27,7 +27,7 @@ PlasmaComponents.ComboBox {
     // 外部 (ConfigModel cfg_*) 写入 fontFamily 时，同步下拉选中项
     onFontFamilyChanged: {
         if (!model)
-            return ;
+            return;
 
         var idx = model.indexOf(fontFamily);
         if (idx === -1)
@@ -36,7 +36,6 @@ PlasmaComponents.ComboBox {
         // 找不到（如字体已卸载或首次安装）回退 Default
         if (currentIndex !== idx)
             currentIndex = idx;
-
     }
     // 只在用户真实操作下拉时回写 root.fontFamily（触发 cfg_* 保存）。
     // 不能用 onCurrentTextChanged：保存的字体临时不可用时会程序化回退到
@@ -44,6 +43,5 @@ PlasmaComponents.ComboBox {
     onActivated: {
         if (currentText !== root.fontFamily)
             root.fontFamily = currentText;
-
     }
 }
