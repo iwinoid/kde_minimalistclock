@@ -1,3 +1,6 @@
 .memsearch/
 *.log
 /tmp/
+
+# local session-history exports (not part of the widget)
+history/
