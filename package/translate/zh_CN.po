@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: minimalistclock\n"
 "Report-Msgid-Bugs-To: https://github.com/iwinoid/kde_minimalistclock\n"
-"POT-Creation-Date: 2026-10-19 01:58+0800\n"
+"POT-Creation-Date: 2026-10-19 02:10+0800\n"
 "PO-Revision-Date: 2026-08-30 12:00+0000\n"
 "Last-Translator: iwinoid\n"
 "Language-Team: Chinese (Simplified)\n"
@@ -55,6 +55,10 @@ msgstr "词间距"
 #: ../contents/ui/configAppearance.qml
 msgid "Date Settings"
 msgstr "日期设置"
+
+#: ../contents/ui/configAppearance.qml
+msgid "Preview"
+msgstr "预览"
 
 #: ../contents/ui/configAppearance.qml
 msgid "Date Format"
@@ -117,16 +121,16 @@ msgid "Custom Color"
 msgstr "自定义颜色"
 
 #: ../contents/ui/configAppearance.qml
-msgid "Choose..."
+msgid "Choose…"
 msgstr "选择…"
 
 #: ../contents/ui/DateBlockEditor.qml
 msgid "Year (four digits)"
-msgstr "年（四位）"
+msgstr "年（四位数字）"
 
 #: ../contents/ui/DateBlockEditor.qml
 msgid "Year (two digits)"
-msgstr "年（两位）"
+msgstr "年（两位数字）"
 
 #: ../contents/ui/DateBlockEditor.qml
 msgid "Month (full name)"
@@ -165,10 +169,6 @@ msgid "Custom text"
 msgstr "自定义文本"
 
 #: ../contents/ui/DateBlockEditor.qml
-msgid "Preview:"
-msgstr "预览："
-
-#: ../contents/ui/DateBlockEditor.qml
 msgid "Separator or text"
 msgstr "分隔符或文本"
 
@@ -196,9 +196,13 @@ msgstr "添加积木"
 msgid "Reset to default"
 msgstr "恢复默认"
 
+#: ../contents/ui/FontSelector.qml
+msgid "Default"
+msgstr "默认"
+
 #: ../contents/ui/main.qml
 msgid "Panels are too small for me!"
-msgstr "面板太小，无法显示"
+msgstr "面板太小，放不下我！"
 
 #~ msgid "Day and Date Spacing"
 #~ msgstr "日期与星期间距"

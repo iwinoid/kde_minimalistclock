@@ -33,6 +33,9 @@ Item {
     property string cfg_date_format: "MM/dd dddd"
     // 日期行积木（JSON 数组）；为空时按旧的 cfg_date_format 迁移，再回退默认
     property string cfg_date_blocks: ""
+    // 预览：与编辑器同源，编辑器每次改动都会写回 cfg_date_blocks
+    readonly property var previewBlocks: DateBlocks.blocksForStored(cfg_date_blocks, cfg_date_format)
+    readonly property string previewText: DateBlocks.render(previewBlocks, new Date())
     // 颜色
     property alias cfg_follow_system_color: followSystemColor.checked
     property alias cfg_font_color: fontColorProxy.chosenColor
@@ -193,6 +196,30 @@ Item {
 
                     Label {
                         text: "px"
+                    }
+                }
+
+                RowLayout {
+                    Kirigami.FormData.label: i18n("Preview") + ":"
+
+                    Rectangle {
+                        Layout.fillWidth: true
+                        implicitHeight: previewLabel.implicitHeight + Kirigami.Units.largeSpacing * 2
+                        radius: Kirigami.Units.smallSpacing
+                        color: Kirigami.Theme.alternateBackgroundColor
+                        border.width: 1
+                        border.color: Qt.rgba(Kirigami.Theme.textColor.r, Kirigami.Theme.textColor.g, Kirigami.Theme.textColor.b, 0.15)
+
+                        Label {
+                            id: previewLabel
+
+                            anchors.centerIn: parent
+                            width: parent.width - Kirigami.Units.largeSpacing * 2
+                            text: root.previewText
+                            elide: Text.ElideRight
+                            horizontalAlignment: Text.AlignHCenter
+                            font.bold: true
+                        }
                     }
                 }
 
@@ -367,7 +394,7 @@ Item {
                     }
 
                     Button {
-                        text: i18n("Choose...")
+                        text: i18n("Choose…")
                         onClicked: colorDialog.open()
                     }
                 }

@@ -116,3 +116,10 @@ Plasma 写配置别名的时机早于控件建完，会造成回显丢失（与�
   `pragma ComponentBehavior: Bound`
 - 表单外包一层 `ColumnLayout`，`Layout.maximumWidth: Kirigami.Units.gridUnit * 40`
   并水平居中：对话框被拉宽/最大化时内容不再拉伸到全宽，默认窄宽度下仍填满
+- 预览行从 `DateBlockEditor` 移入配置页的 `Kirigami.FormLayout`：标签与「字体：」等
+  同一列对齐；编辑器每次改动写回 `cfg_date_blocks`，配置页的 `previewText` 绑定
+  随即刷新
+- i18n 复查：47 条、100%。`FontSelector` 的 `Default` 改成 `{ value, label }`
+  对象模型后可翻译（保存值仍是 `Default`）；`Choose...` 统一为 KDE 省略号
+  `Choose…`；年积木中文统一为「年（四位数字）/年（两位数字）」；面板提示按英文
+  原文语气改为「面板太小，放不下我！」

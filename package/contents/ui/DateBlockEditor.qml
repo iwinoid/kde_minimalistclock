@@ -6,7 +6,7 @@ import QtQuick.Layouts
 import "dateBlocks.js" as DateBlocks
 import org.kde.kirigami as Kirigami
 
-// 日期行积木编辑器：实时预览 + 可增删/排序的积木列表。
+// 日期行积木编辑器：可增删/排序的积木列表（预览由配置页统一渲染，便于与表单标签对齐）。
 // blocks 是编辑器自己的状态：配置页在初始化/外部变更时写入，用户改动通过
 // blocksEdited 回传。文本编辑只改当前块对象，避免重建 TextField 打断输入。
 ColumnLayout {
@@ -15,7 +15,6 @@ ColumnLayout {
     property var blocks: []
     readonly property int maxBlocks: DateBlocks.MAX_BLOCKS
     readonly property int customChoiceIndex: tokenChoices.length - 1
-    property string previewText: ""
     // 下拉框选项；最后一项是自定义文本
     readonly property var tokenChoices: [
         {
@@ -66,13 +65,8 @@ ColumnLayout {
 
     signal blocksEdited(var updatedBlocks)
 
-    function refreshPreview() {
-        previewText = DateBlocks.render(blocks, new Date());
-    }
-
     function commitBlocks(updatedBlocks) {
         blocks = updatedBlocks;
-        refreshPreview();
         blocksEdited(updatedBlocks);
     }
 
@@ -106,7 +100,6 @@ ColumnLayout {
             return;
 
         blocks[blockIndex].text = text;
-        refreshPreview();
         blocksEdited(blocks.slice());
     }
 
@@ -148,40 +141,6 @@ ColumnLayout {
     Component.onCompleted: {
         if (!blocks.length)
             blocks = DateBlocks.defaultBlocks();
-
-        refreshPreview();
-    }
-    onBlocksChanged: refreshPreview()
-
-    // ---- 实时预览 ----
-    RowLayout {
-        Layout.fillWidth: true
-        spacing: Kirigami.Units.smallSpacing
-
-        Label {
-            text: i18n("Preview:")
-            opacity: 0.7
-        }
-
-        Rectangle {
-            Layout.fillWidth: true
-            implicitHeight: previewLabel.implicitHeight + Kirigami.Units.largeSpacing * 2
-            radius: Kirigami.Units.smallSpacing
-            color: Kirigami.Theme.alternateBackgroundColor
-            border.width: 1
-            border.color: Qt.rgba(Kirigami.Theme.textColor.r, Kirigami.Theme.textColor.g, Kirigami.Theme.textColor.b, 0.15)
-
-            Label {
-                id: previewLabel
-
-                anchors.centerIn: parent
-                width: parent.width - Kirigami.Units.largeSpacing * 2
-                text: root.previewText
-                elide: Text.ElideRight
-                horizontalAlignment: Text.AlignHCenter
-                font.bold: true
-            }
-        }
     }
 
     // ---- 积木列表 ----
