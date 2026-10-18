@@ -1,10 +1,14 @@
 import QtQuick
-import QtQuick.Controls
+import org.kde.plasma.components as PlasmaComponents
 
 // 纯字体下拉，不自带标签，由外层 Kirigami.FormLayout 通过
 // Kirigami.FormData.label 统一配标签，避免双标签错位。
 // 对外接口不变：property string fontFamily（cfg_* 直接绑定它）。
-ComboBox {
+//
+// 注意：必须用 PlasmaComponents 的 ComboBox。桌面风格的 QtQuick.Controls
+// ComboBox 在 onCountChanged 里会对每个模型项做一次 FontMetrics 文字测量，
+// 字体列表有 600+ 项时，打开设置页会因此卡住 2–3 秒。
+PlasmaComponents.ComboBox {
     id: root
 
     property string fontFamily
