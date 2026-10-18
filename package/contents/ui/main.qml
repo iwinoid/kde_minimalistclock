@@ -3,6 +3,7 @@ import QtQuick 2.15
 import QtQuick.Controls 2.15
 import QtQuick.Effects as QtEffects
 import QtQuick.Layouts 2.15
+import "dateBlocks.js" as DateBlocks
 import org.kde.kirigami as Kirigami
 import org.kde.plasma.components as PlasmaComponents
 import org.kde.plasma.core as PlasmaCore
@@ -38,9 +39,9 @@ PlasmoidItem {
     // date
     property int dateFontSize: plasmoid.configuration.date_font_size
     property int dateLetterSpacing: plasmoid.configuration.date_letter_spacing
-    property int dateSpacing: plasmoid.configuration.date_spacing
     property string dateFontFamily: plasmoid.configuration.date_font_family == "Default" ? font_livvic.name : plasmoid.configuration.date_font_family
-    property string dateFormat: plasmoid.configuration.date_format || "MM/dd dddd"
+    // 日期行积木：优先用新配置，其次从旧 date_format 迁移，最后回退默认
+    property var dateBlocks: DateBlocks.blocksForStored(plasmoid.configuration.date_blocks, plasmoid.configuration.date_format)
 
     Plasmoid.backgroundHints: PlasmaCore.Types.ConfigurableBackground
 
@@ -70,35 +71,13 @@ PlasmoidItem {
         property int textExtra: root.textShadowEnabled ? root.textShadowRadius * 2 : 0
         property int shadowExtra: Math.max(frameExtra, textExtra)
 
-        // 时间+日期渲染入口。三处调用：整分 tick、配置页改了日期格式、首屏。
-        // 逻辑原样来自旧 onDataChanged 内联代码，只加了空数据保护。
+        // 时间+日期渲染入口。三处调用：整分 tick、配置页改了日期积木、首屏。
         function updateDateTime(curDate) {
             if (!curDate)
                 curDate = new Date();
 
             timeLabel.text = Qt.formatTime(curDate, "hh mm");
-            // 日期按可配置格式显示，支持 MM/dd dddd 与 MMM dd dddd（含英文月份）
-            try {
-                var fmt = root.dateFormat;
-                var txt;
-                if (fmt.indexOf("MMM") !== -1) {
-                    // 英文月份缩写/全称，中文星期需单独处理
-                    var enShort = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-                    var enLong = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-                    var m = curDate.getMonth(); // 0-11
-                    // 先替换 MMMM 再替换 MMM，避免重叠
-                    var fmtEn = fmt.replace(/MMMM/g, enLong[m]).replace(/MMM/g, enShort[m]);
-                    txt = Qt.formatDate(curDate, fmtEn);
-                } else {
-                    txt = Qt.formatDate(curDate, fmt);
-                }
-                dateLabel.text = txt.toUpperCase();
-                dayLabel.text = "";
-                dayLabel.visible = false;
-            } catch (e) {
-                dayLabel.text = Qt.formatDate(curDate, "dddd").toUpperCase();
-                dateLabel.text = Qt.formatDate(curDate, "dd MMM").toUpperCase();
-            }
+            dateLabel.text = DateBlocks.render(root.dateBlocks, curDate);
         }
 
         Layout.minimumWidth: column.implicitWidth + shadowExtra
@@ -110,10 +89,10 @@ PlasmoidItem {
             updateDateTime(d ? d["DateTime"] : new Date());
         }
 
-        // 配置页改日期格式后立刻重渲染，不等整分 tick。
-        // 放 Connections 里是因为 onDateFormatChanged 是 root 的信号，fullRoot 内不能直写。
+        // 配置页改了日期积木后立刻重渲染，不等整分 tick。
+        // 放 Connections 里是因为 onDateBlocksChanged 是 root 的信号，fullRoot 内不能直写。
         Connections {
-            function onDateFormatChanged() {
+            function onDateBlocksChanged() {
                 var d = dataSource.data["Local"];
                 fullRoot.updateDateTime(d ? d["DateTime"] : new Date());
             }
@@ -198,32 +177,16 @@ PlasmoidItem {
 
             }
 
-            Row {
-                id: dateRow
+            PlasmaComponents.Label {
+                id: dateLabel
 
                 anchors.horizontalCenter: parent.horizontalCenter
-                spacing: root.dateSpacing
+                color: root.effectiveFontColor
+                font.pixelSize: root.dateFontSize
+                font.letterSpacing: root.dateLetterSpacing
+                font.family: root.dateFontFamily
                 // 日期文本同样支持独立文字阴影
                 layer.enabled: root.textShadowEnabled && root.textShadowOpacity > 0 && root.textShadowRadius > 0
-
-                PlasmaComponents.Label {
-                    id: dayLabel
-
-                    visible: false
-                    color: root.effectiveFontColor
-                    font.pixelSize: root.dateFontSize
-                    font.letterSpacing: root.dateLetterSpacing
-                    font.family: root.dateFontFamily
-                }
-
-                PlasmaComponents.Label {
-                    id: dateLabel
-
-                    color: root.effectiveFontColor
-                    font.pixelSize: root.dateFontSize
-                    font.letterSpacing: root.dateLetterSpacing
-                    font.family: root.dateFontFamily
-                }
 
                 layer.effect: QtEffects.MultiEffect {
                     shadowEnabled: root.textShadowEnabled

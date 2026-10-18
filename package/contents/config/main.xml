@@ -53,8 +53,13 @@
         <entry name="date_font_family" type="String">
             <default>Default</default>
         </entry>
+        <!-- 旧版日期格式串，仅用于迁移到 date_blocks，不再在设置页暴露 -->
         <entry name="date_format" type="String">
             <default>MM/dd dddd</default>
+        </entry>
+        <!-- 日期行积木（JSON 数组）；为空时从 date_format 迁移，再回退默认值 -->
+        <entry name="date_blocks" type="String">
+            <default></default>
         </entry>
 
         <!-- Time -->
