@@ -1,6 +1,11 @@
+pragma ComponentBehavior: Bound
+
+// KConfigXT 的配置键在 plasmoid.configuration 上是动态属性（KConfigPropertyMap），
+// 静态分析无法解析，下面统一关闭该文件的 MissingProperty 提示。
+// qmllint disable missing-property
+
 import QtQml 2.15
 import QtQuick 2.15
-import QtQuick.Controls 2.15
 import QtQuick.Effects as QtEffects
 import QtQuick.Layouts 2.15
 import "dateBlocks.js" as DateBlocks
@@ -107,7 +112,7 @@ PlasmoidItem {
             interval: 60000
             intervalAlignment: Plasma5Support.Types.AlignToMinute
             onDataChanged: {
-                updateDateTime(dataSource.data["Local"]["DateTime"]);
+                fullRoot.updateDateTime(dataSource.data["Local"]["DateTime"]);
             }
         }
 
