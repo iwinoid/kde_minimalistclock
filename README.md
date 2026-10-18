@@ -30,7 +30,7 @@ All options live on the Appearance page (right-click the widget → Configure):
 - **Frame shadow** — independent toggle, blur (0–50) and opacity (0–100%)
 - **Text shadow** — independent toggle, blur (0–20) and opacity (0–100%), rendered separately from the frame shadow
 - **Follow system color** (on by default) — text and frame follow `Kirigami.Theme.textColor`; turn it off to pick a custom color
-- **Date format** — 11 presets plus a free-text field accepting any Qt date format (`MM` month, `dd` day, `dddd` weekday)
+- **Date blocks** — build the date line from visual blocks instead of picking a fixed format: year (`yyyy`/`yy`), month (`MMMM`/`MMM`/`MM`/`M`), day (`dd`/`d`), weekday (`dddd`/`ddd`) and free-text separators; add, remove and reorder blocks with a live preview. Existing `date_format` values migrate automatically.
 - **Fonts & spacing** — separate font, size, letter/word spacing for time and date; frame padding and border width
 - **Scrollable settings page** — six grouped sections that fit small config dialogs
 - **Simplified Chinese localization** — full `zh_CN` translation, applied automatically under a Chinese locale
@@ -38,7 +38,7 @@ All options live on the Appearance page (right-click the widget → Configure):
 
 ## Roadmap
 
-- [ ] **Modular date/weekday line ("building blocks")** — split the single date line under the time into independent blocks (weekday, day, month, year, or custom segments). Each block should be toggleable and styleable on its own, and the blocks should be rearrangeable (order, horizontal/vertical layout, spacing), with optional preset layouts. The exact behaviour is still to be discussed.
+- [ ] **Per-block styling** — optional font family and size overrides for individual date blocks. Format composition itself ships in 0.2.0.
 
 ## Installation
 
@@ -71,6 +71,12 @@ The widget on the KDE Store ("Minimalist Clock") is the upstream version by Pray
 ## Localization
 
 Simplified Chinese (`zh_CN`) ships with the widget: source strings are in `package/translate/zh_CN.po`, compiled to `package/contents/locale/zh_CN/LC_MESSAGES/plasma_applet_com.github.iwinoid.minimalistclock.mo`. See [package/translate/ReadMe.md](package/translate/ReadMe.md) for how to rebuild or add a language. 中文说明见 [README_zh_CN.md](README_zh_CN.md)。
+
+## Credits
+
+Developed by DeepSeek V4.1 Flash.
+
+<a href="https://github.com/deepseek-ai/deepseek-harness"><img alt="powered by dsh" src="https://img.shields.io/badge/powered_by-dsh-4D6BFE?style=for-the-badge&logo=deepseek&logoColor=white"></a>
 
 ## Upstream
 
