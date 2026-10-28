@@ -4,3 +4,6 @@
 
 # local session-history exports (not part of the widget)
 history/
+
+# local design docs from the superpowers workflow (not published)
+docs/superpowers/
